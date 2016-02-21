@@ -28,5 +28,12 @@ namespace TelerikLibrary.Controllers
 
             return View();
         }
+
+        public ActionResult AllBooks()
+        {
+            ViewBag.Message = "All my books";
+
+            return View();
+        }
     }
 }

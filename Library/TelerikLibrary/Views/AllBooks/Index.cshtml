@@ -1,0 +1,61 @@
+﻿@using System.Globalization
+@using TelerikLibrary.Models
+
+@{
+    var culture = CultureInfo.CurrentCulture.ToString();
+}
+<script src="@Url.Content("~/Scripts/cultures/kendo.culture." + culture + ".min.js")"></script>
+<script>
+    kendo.culture("@culture");
+</script>
+@(Html.Kendo().Grid<Book>()
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.Name).Title("Название").ClientTemplate(
+                    @"<!--<div class='customer-photo'
+                        style='background-image: url(../../content/web/Customers/#:data.CustomerID#.jpg);'></div>-->
+                    <div class='customer-name'>#: Name #</div>")
+              .Width(240);
+            columns.Bound(c => c.Author).Title("Автор");
+            columns.Bound(c => c.Publisher).Title("Издательство");
+            columns.Bound(c => c.Year).Title("Год издания");
+            columns.Bound(c => c.Category).Title("Категория");
+            columns.Bound(c => c.Description).Title("Описание");
+        })
+        .Scrollable()
+        .Groupable()
+        .Sortable()
+        //.Filterable(filter => filter.Mode(GridFilterMode.Row))
+        .Pageable(pageable => pageable
+            .Refresh(true)
+            .PageSizes(true)
+            .ButtonCount(5))
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("Products_Read", "AllBooks"))
+            .PageSize(20)
+        )
+)
+
+<style>
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+</style>
