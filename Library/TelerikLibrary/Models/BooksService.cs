@@ -17,6 +17,7 @@ namespace TelerikLibrary.Models
             var connector = new SqLiteConnector();
             _books = connector.LoadData(BooksQuery).Rows.OfType<DataRow>().
                 Select(Book.FromRow).ToList();
+            
         }
 
         public BooksService(IEnumerable<Book> books)

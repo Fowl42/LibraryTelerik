@@ -23,14 +23,12 @@
             columns.Bound(c => c.Category).Title("Категория");
             columns.Bound(c => c.Description).Title("Описание");
         })
+        .HtmlAttributes(new { style = "height: 600px;" })
         .Scrollable()
         .Groupable()
         .Sortable()
-        //.Filterable(filter => filter.Mode(GridFilterMode.Row))
-        .Pageable(pageable => pageable
-            .Refresh(true)
-            .PageSizes(true)
-            .ButtonCount(5))
+        .Filterable(filter => filter.Mode(GridFilterMode.Row))
+        
         .DataSource(dataSource => dataSource
             .Ajax()
             .Read(read => read.Action("Products_Read", "AllBooks"))
